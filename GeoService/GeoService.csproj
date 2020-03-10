@@ -11,6 +11,7 @@
     <PackageReference Include="NServiceBus.Newtonsoft.Json" Version="2.2.0" />
     <PackageReference Include="NServiceBus.RabbitMQ" Version="5.1.2" />
     <PackageReference Include="RabbitMQ.Client" Version="5.1.2" />
+    <PackageReference Include="System.Device.Location.Portable" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,9 @@
 
 using System;
+using System.IO;
 using System.Text;
+using System.Xml;
+using System.Xml.Serialization;
 using Microsoft.Extensions.ObjectPool;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -15,7 +18,21 @@ namespace WebAPI.Helpers.RabbitMQ
         {
             _objectPool = new DefaultObjectPool<IModel>(objectPolicy, Environment.ProcessorCount * 2);
         }
+        private string Serialize(Object obj)
+        {
+            XmlSerializer xsSubmit = new XmlSerializer(obj.GetType());
+            var xml = "";
 
+            using (var sww = new StringWriter())
+            {
+                using (XmlWriter writer = XmlWriter.Create(sww))
+                {
+                    xsSubmit.Serialize(writer, obj);
+                    xml = sww.ToString(); // Your XML
+                }
+            }
+            return xml.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>","<?xml version=\"1.0\"?>");
+        }
         public void Publish<T>(T message, string exchangeName, string exchangeType, string routeKey)
             where T : class
         {
@@ -29,7 +46,8 @@ namespace WebAPI.Helpers.RabbitMQ
                 channel.ExchangeDeclare(exchangeName, exchangeType, true, false, null);
 
                 // var sendBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
-                var sendBytes = Encoding.UTF8.GetBytes("<MyMessage><SomeProperty>Hello from native sender</SomeProperty></MyMessage>");
+                var SerializeObject = new System.Xml.Serialization.XmlSerializer(typeof(GeoPoints));
+                var sendBytes = Encoding.UTF8.GetBytes(Serialize(message));
 
                 var properties = channel.CreateBasicProperties();
                 properties.Persistent = true;

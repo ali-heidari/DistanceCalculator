@@ -8,10 +8,10 @@ namespace GeoService
     {
         static async Task Main()
         {
-            Console.Title = "Samples.RabbitMQ.NativeIntegration.Receiver";
+            Console.Title = "RabbitMQ.Receiver";
 
             #region ConfigureRabbitQueueName
-            var endpointConfiguration = new EndpointConfiguration("Samples.RabbitMQ.NativeIntegration");
+            var endpointConfiguration = new EndpointConfiguration("RabbitMQ");
             // endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
             var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
             transport.UseConventionalRoutingTopology();

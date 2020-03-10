@@ -21,16 +21,10 @@ namespace WebAPI.Controllers
         [HttpGet("get")]
         public IActionResult Get()
         {
-            // other opreation  
-
-            // if above operation succeed, publish a message to RabbitMQ  
-
-            var num = new System.Random().Next(9000);
             // publish message  
-            _manager.Publish(new MyMessage()
-            { 
-                SomeProperty = $"Hello-{num}"
-            }, "Samples.RabbitMQ.NativeIntegration", "fanout", "Samples.RabbitMQ.NativeIntegration");
+            _manager.Publish(new GeoPoints()
+            {  StartingLat=20.1f,StartingLng=30.66f, EndingLat=21,EndingLng=30
+            }, "RabbitMQ", "fanout", "RabbitMQ");
             return Ok("Message sent to endpoint");
         }
     }
