@@ -8,7 +8,7 @@ namespace Core.Data
 {
     public class DataProvider
     {
-        private Dictionary<string, Dictionary<Guid, string>> _data;
+        public Dictionary<string, Dictionary<Guid, string>> _data;
         private static DataProvider _dp;
         private DataProvider()
         {
