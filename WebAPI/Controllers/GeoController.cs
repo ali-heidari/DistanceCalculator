@@ -18,13 +18,11 @@ namespace WebAPI.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet("get")]
-        public IActionResult Get()
+        [HttpGet("getDistance")]
+        public IActionResult GetDistance(GeoPoints model)
         {
             // publish message  
-            _manager.Publish(new GeoPoints()
-            {  StartingLat=20.1f,StartingLng=30.66f, EndingLat=21,EndingLng=30
-            }, "RabbitMQ", "fanout", "RabbitMQ");
+            _manager.Publish(model, "RabbitMQ", "fanout", "RabbitMQ");
             return Ok("Message sent to endpoint");
         }
     }

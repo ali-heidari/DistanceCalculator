@@ -9,5 +9,6 @@ namespace Core.Data
         public float EndingLat { get; set; }
         public float EndingLng { get; set; }
         public double Distance { get; set; }
+        public string UserGUID { get; set; }
     }
 }

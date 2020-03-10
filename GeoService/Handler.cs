@@ -17,6 +17,16 @@ public class Handler :
         var distance = sCoord.GetDistanceTo(eCoord);
 
         log.Info($"Distance = {distance}");
+        Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
+        db.Insert(new Core.Data.GeoData()
+        {
+            Distance = distance,
+            StartingLat = message.StartingLat,
+            StartingLng = message.StartingLng,
+            EndingLat = message.EndingLat,
+            EndingLng = message.EndingLng,
+            UserGUID = message.UserGUID
+        });
         return Task.CompletedTask;
     }
 }
