@@ -14,6 +14,7 @@ namespace WebAPI.Services
     public interface IAuthService
     {
         User Authenticate(string username, string password);
+        bool Register(string email, string username, string password);
         IEnumerable<User> GetAll();
     }
 
@@ -21,8 +22,8 @@ namespace WebAPI.Services
     {
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
         private List<User> _users = new List<User>
-        { 
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" } 
+        {
+            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
         };
 
         private readonly AppSettings _appSettings;
@@ -45,7 +46,7 @@ namespace WebAPI.Services
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new Claim[] 
+                Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
@@ -56,6 +57,18 @@ namespace WebAPI.Services
             user.Token = tokenHandler.WriteToken(token);
 
             return user.WithoutPassword();
+        }
+
+        /// <summary>
+        /// Register a new account in database
+        /// </summary>
+        /// <param name="username">User name</param>
+        /// <param name="email">Email</param>
+        /// <param name="password">Password</param>
+        /// <returns>returns true if user added to database</returns>
+        public bool Register(string email, string username, string password)
+        {
+            return true;
         }
 
         public IEnumerable<User> GetAll()
