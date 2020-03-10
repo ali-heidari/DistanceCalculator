@@ -1,8 +1,54 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<form action="" method="post">
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="au-card">
+                <div class="au-card-inner">
+                    <h3 class="title-2">Starting point</h3>
+                    <div class="mt-3 overview-wrap">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Latitude</label>
+                                <input class="au-input au-input--full" type="number" name="lat" placeholder="Latitude">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Longitude</label>
+                                <input class="au-input au-input--full" type="number" name="lng" placeholder="Longitude">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="au-card">
+                <div class="au-card-inner">
+                    <h3 class="title-2">Ending point</h3>
+                    <div class="mt-3 overview-wrap">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Latitude</label>
+                                <input class="au-input au-input--full" type="number" name="lat" placeholder="Latitude">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label>Longitude</label>
+                                <input class="au-input au-input--full" type="number" name="lng" placeholder="Longitude">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto mt-5 center-block">
+            <button class="btn btn-success" type="submit">Calculate the
+                distance</button>
+        </div>
+    </div>
+</form>
