@@ -20,7 +20,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"test\",\n    \"password\": \"test\"\n}",
+					"raw": "{\n    \"email\": \"test@test.coom\",\n    \"password\": \"test\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -56,7 +56,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"test\",\n    \"username\":\"test\",\n    \"password\": \"test\"\n}",
+					"raw": "{\n    \"email\": \"test@test.coom\",\n    \"username\":\"test\",\n    \"password\": \"test\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,6 +72,82 @@
 					"path": [
 						"auth",
 						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4500/geo/getDIstance",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userGUID\":  \"b994dad8-6c0d-4970-8fdf-c4c47a8a37f6\",\n    \"startingLat\": 30,\n    \"startingLng\": 20.1,\n    \"endingLat\": 30.2,\n    \"endingLng\": 20\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4500/geo/GetDistance",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"geo",
+						"GetDistance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4500/geo/getAllDIstances",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"userGuid\":  \"b994dad8-6c0d-4970-8fdf-c4c47a8a37f6\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4500/geo/GetAllDistances",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"geo",
+						"GetAllDistances"
 					]
 				}
 			},
