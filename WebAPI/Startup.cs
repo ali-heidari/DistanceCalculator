@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
+using WebAPI.Helpers.RabbitMQ.Extensions;
 
 
 namespace WebAPI
@@ -27,15 +28,17 @@ namespace WebAPI
             services.AddCors();
             services.AddControllers();
 
+            services.AddRabbit(Configuration);
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Distance calculator", Version = "v1" });
             });
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
-            var secret = Configuration["AppSettings:Secret"];
+
             services.Configure<AppSettings>(appSettingsSection);
 
             // configure jwt authentication
@@ -75,7 +78,7 @@ namespace WebAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Distance calculator V1");
             });
-            
+
             app.UseRouting();
 
             // global cors policy

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using WebAPI.Services;
 using WebAPI.Models;
-using System.Linq;
 
 namespace WebAPI.Controllers
 {
