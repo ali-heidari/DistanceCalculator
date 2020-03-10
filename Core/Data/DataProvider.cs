@@ -54,6 +54,7 @@ namespace Core.Data
                 foreach (var item in rows)
                 {
                     user = (User)JsonConvert.DeserializeObject(item.Value);
+                    user.guid = item.Key;
                     if (user.email == email && user.password == password)
                         return user;
                 }

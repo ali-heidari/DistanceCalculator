@@ -27,10 +27,10 @@ namespace WebAPI.Services
             _appSettings = appSettings.Value;
         }
 
-        public User Authenticate(string username, string password)
+        public User Authenticate(string email, string password)
         {
             Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
-            var user = db.GetData("User",)
+            var user = db.GetUser(email, password);
 
             // return null if user not found
             if (user == null)
@@ -43,15 +43,21 @@ namespace WebAPI.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.guid.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            user.Token = tokenHandler.WriteToken(token);
 
-            return user.WithoutPassword();
+            Entities.User eUser = new User();
+            eUser.Email = user.email;
+            eUser.Username = user.username;
+            eUser.Password = user.password;
+            eUser.GUID = user.guid.ToString();
+            eUser.Token = tokenHandler.WriteToken(token);
+
+            return eUser.WithoutPassword();
         }
 
         /// <summary>
