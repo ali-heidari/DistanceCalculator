@@ -3,7 +3,7 @@ using Microsoft.Extensions.ObjectPool;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 
-namespace WebAPI.Helpers.RabbitMQ
+namespace WebAPI.RabbitMQ
 {
     public class RabbitModelPooledObjectPolicy : IPooledObjectPolicy<IModel>
     {

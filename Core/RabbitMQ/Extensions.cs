@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.ObjectPool;
 using RabbitMQ.Client;
 
-namespace WebAPI.Helpers.RabbitMQ.Extensions
+namespace WebAPI.RabbitMQ.Extensions
 {
     public static class RabbitServiceCollectionExtensions
     {

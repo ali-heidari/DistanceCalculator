@@ -1,5 +1,5 @@
 
-namespace WebAPI.Helpers.RabbitMQ
+namespace WebAPI.RabbitMQ
 {
     public interface IRabbitManager
     {

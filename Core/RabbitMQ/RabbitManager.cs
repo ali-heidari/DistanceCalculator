@@ -10,7 +10,7 @@ using Microsoft.Extensions.ObjectPool;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 
-namespace WebAPI.Helpers.RabbitMQ
+namespace WebAPI.RabbitMQ
 {
     public class RabbitManager : IRabbitManager
     {

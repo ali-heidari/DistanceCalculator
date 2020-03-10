@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.OpenApi.Models;
-using WebAPI.Helpers.RabbitMQ.Extensions;
+using WebAPI.RabbitMQ.Extensions;
 
 
 namespace WebAPI
