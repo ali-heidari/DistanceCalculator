@@ -2,7 +2,44 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "build",
+            "label": "build(webApi)",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/WebAPI/WebAPI.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish(webApi)",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/WebAPI/WebAPI.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch(webApi)",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "${workspaceFolder}/WebAPI/WebAPI.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build(webApp)",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -14,7 +51,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "publish",
+            "label": "publish(webApp)",
             "command": "dotnet",
             "type": "process",
             "args": [
@@ -26,7 +63,7 @@
             "problemMatcher": "$msCompile"
         },
         {
-            "label": "watch",
+            "label": "watch(webApp)",
             "command": "dotnet",
             "type": "process",
             "args": [
