@@ -20,6 +20,11 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            return View("CalculateDistance");
+        }
+
+        public IActionResult CalculateDistance()
+        {
             return View();
         }
 
