@@ -8,11 +8,11 @@ namespace WebAPI.Controllers
     [Authorize]
     [ApiController]
     [Route("[controller]")]
-    public class TestController : ControllerBase
+    public class GeoController : ControllerBase
     {
         private IRabbitManager _manager;
 
-        public TestController(IRabbitManager manager)
+        public GeoController(IRabbitManager manager)
         {
             this._manager = manager;
         }
