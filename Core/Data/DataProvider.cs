@@ -40,31 +40,24 @@ namespace Core.Data
             }
         }
 
-        public T GetData<T>(string docName, Dictionary<string, object> fields) where T : DataObject
+        public User GetUser(string email, string password)
         {
             try
             {
                 Dictionary<Guid, string> rows = null;
-                if (!_data.ContainsKey(docName))
+                if (!_data.ContainsKey("User"))
                     return null;
 
-                rows = _data[docName];
-                bool match = false;
-                T t = default;
+                rows = _data["User"];
+
+                User user = null;
                 foreach (var item in rows)
                 {
-                    t = (T)JsonConvert.DeserializeObject(item.Value);
-                    foreach (var field in fields)
-                    {
-                        if (t.GetType().GetProperties().FirstOrDefault(x => x.Name == field.Key) != null)
-                        {
-                            match = true;
-                        }
-                    }
-                    if (match)
-                        break;
+                    user = (User)JsonConvert.DeserializeObject(item.Value);
+                    if (user.email == email && user.password == password)
+                        return user;
                 }
-                return t;
+                return null;
             }
             catch (Exception er)
             {
