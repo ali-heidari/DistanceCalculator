@@ -1,5 +1,6 @@
 ﻿using System.Device.Location;
 using System.Threading.Tasks;
+using Core.NServiceBus;
 using NServiceBus;
 using NServiceBus.Logging;
 using RabbitMQ.Client.Events;
@@ -18,7 +19,7 @@ public class Handler :
 
         log.Info($"Distance = {distance}");
         Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
-        db.Insert(new Core.Data.GeoData()
+        bool res = db.Insert(new Core.Data.GeoData()
         {
             Distance = distance,
             StartingLat = message.StartingLat,
@@ -27,6 +28,7 @@ public class Handler :
             EndingLng = message.EndingLng,
             UserGUID = message.UserGUID
         });
+        
         return Task.CompletedTask;
     }
 }

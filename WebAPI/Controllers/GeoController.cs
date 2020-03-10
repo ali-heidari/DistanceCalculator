@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using NServiceBus;
 using WebAPI.Helpers.RabbitMQ;
 using System.Linq;
+using Core.NServiceBus;
 
 namespace WebAPI.Controllers
 {
