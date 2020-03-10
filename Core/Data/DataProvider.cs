@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Core.Data
 {
@@ -39,6 +40,37 @@ namespace Core.Data
             }
         }
 
+        public T GetData<T>(string docName, Dictionary<string, object> fields) where T : DataObject
+        {
+            try
+            {
+                Dictionary<Guid, string> rows = null;
+                if (!_data.ContainsKey(docName))
+                    return null;
+
+                rows = _data[docName];
+                bool match = false;
+                T t = default;
+                foreach (var item in rows)
+                {
+                    t = (T)JsonConvert.DeserializeObject(item.Value);
+                    foreach (var field in fields)
+                    {
+                        if (t.GetType().GetProperties().FirstOrDefault(x => x.Name == field.Key) != null)
+                        {
+                            match = true;
+                        }
+                    }
+                    if (match)
+                        break;
+                }
+                return t;
+            }
+            catch (Exception er)
+            {
+                return null;
+            }
+        }
         public T GetData<T>(string docName, Guid guid) where T : DataObject
         {
 

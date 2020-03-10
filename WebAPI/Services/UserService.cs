@@ -15,16 +15,10 @@ namespace WebAPI.Services
     {
         User Authenticate(string username, string password);
         bool Register(string email, string username, string password);
-        IEnumerable<User> GetAll();
     }
 
     public class AuthService : IAuthService
     {
-        // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<User> _users = new List<User>
-        {
-            new User { Id = 1, FirstName = "Test", LastName = "User", Username = "test", Password = "test" }
-        };
 
         private readonly AppSettings _appSettings;
 
@@ -35,7 +29,8 @@ namespace WebAPI.Services
 
         public User Authenticate(string username, string password)
         {
-            var user = _users.SingleOrDefault(x => x.Username == username && x.Password == password);
+            Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
+            var user = db.GetData("User",)
 
             // return null if user not found
             if (user == null)
@@ -68,12 +63,13 @@ namespace WebAPI.Services
         /// <returns>returns true if user added to database</returns>
         public bool Register(string email, string username, string password)
         {
-            return true;
+            Core.Data.User user = new Core.Data.User();
+            user.email = email;
+            user.username = username;
+            user.password = password;
+            Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
+            return db.Insert(user);
         }
 
-        public IEnumerable<User> GetAll()
-        {
-            return _users.WithoutPasswords();
-        }
     }
 }
