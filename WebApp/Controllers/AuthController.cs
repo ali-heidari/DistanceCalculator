@@ -18,15 +18,26 @@ namespace WebApp.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Login action
+        /// </summary>
+        /// <returns>
+        /// Returns the Auth/Login.cshtml as view
+        /// </returns>
         public IActionResult Login()
         {
             return View();
         }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        
+        /// <summary>
+        /// Register action, shows the page to let user register new account
+        /// </summary>
+        /// <returns>
+        /// Returns the Auth/Register.cshtml as view
+        /// </returns>
+        public IActionResult Register()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }
