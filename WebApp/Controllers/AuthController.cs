@@ -39,5 +39,16 @@ namespace WebApp.Controllers
         {
             return View();
         }
+
+        /// <summary>
+        /// ForgotPass action, shows the page to let user to recover his/her password
+        /// </summary>
+        /// <returns>
+        /// Returns the Auth/ForgotPass.cshtml as view
+        /// </returns>
+        public IActionResult ForgotPass()
+        {
+            return View();
+        }
     }
 }
