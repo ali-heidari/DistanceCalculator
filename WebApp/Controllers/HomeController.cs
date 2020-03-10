@@ -40,6 +40,17 @@ namespace WebApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Loads the form which shows the history of calculated distances
+        /// </summary>
+        /// <returns>
+        /// Returns DistancesHistory.cshtml as view
+        /// </returns>
+        public IActionResult DistancesHistory()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
