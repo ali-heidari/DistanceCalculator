@@ -15,9 +15,14 @@ A simple web application written in .Net Core
 
 ## What is used
 
-1. NServiceBus
-2. RabbitMQ
-3. DatabaseLayer: Custom In-Memory database
-4. WebAPI
-5. Swagger
+1. NServiceBus:
+    - NService with RabbitMQ used together
+2. RabbitMQ:
+    - Management UI of RabbitMQ let us to monitor and manage the transferring messages between service/components
+3. DatabaseLayer:
+    - Custom In-Memory database
+4. WebAPI:
+    - Auth and Geo controller
+5. Swagger:
+    - http://localhost:4500/swagger/index.html
 6. Collection of postman
