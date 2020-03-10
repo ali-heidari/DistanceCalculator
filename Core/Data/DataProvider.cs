@@ -10,7 +10,10 @@ namespace Core.Data
     {
         private Dictionary<string, Dictionary<Guid, string>> _data;
         private static DataProvider _dp;
-        private DataProvider() { }
+        private DataProvider()
+        {
+            _data = new Dictionary<string, Dictionary<Guid, string>>();
+        }
 
         public static DataProvider DataProviderFactory()
         {
@@ -53,7 +56,7 @@ namespace Core.Data
                 User user = null;
                 foreach (var item in rows)
                 {
-                    user = (User)JsonConvert.DeserializeObject(item.Value);
+                   user = JsonConvert.DeserializeObject<User>(item.Value);
                     user.guid = item.Key;
                     if (user.email == email && user.password == password)
                         return user;
