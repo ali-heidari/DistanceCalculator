@@ -17,7 +17,7 @@ A simple web application written in .Net Core
 
 1. NServiceBus
 2. RabbitMQ
-3. DatabaseLayer
+3. DatabaseLayer: Custom In-Memory database
 4. WebAPI
 5. Swagger
-6. Collection of postman 
+6. Collection of postman
