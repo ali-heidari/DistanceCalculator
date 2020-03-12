@@ -61,8 +61,8 @@ namespace WebAPI.RabbitMQ
                 properties.Headers = new Dictionary<string, object> { { "NServiceBus.EnclosedMessageTypes", typeName } };
                 var correlationId = Guid.NewGuid().ToString();
                 properties.CorrelationId = correlationId;
-                string replyQueueName = channel.QueueDeclare().QueueName;
-                properties.ReplyTo = "RabbitMQ";//replyQueueName;
+                string replyQueueName = "RabbitMQ";//channel.QueueDeclare().QueueName;
+                properties.ReplyTo = replyQueueName;
 
                 EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
@@ -73,6 +73,7 @@ namespace WebAPI.RabbitMQ
                     {
 
                     }
+                    ((EventingBasicConsumer)model).Model.BasicAck(ea.DeliveryTag, false);
                 };
 
                 channel.BasicConsume(
