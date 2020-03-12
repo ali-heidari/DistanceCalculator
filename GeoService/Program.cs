@@ -13,6 +13,8 @@ namespace GeoService
             #region ConfigureRabbitQueueName
             var endpointConfiguration = new EndpointConfiguration("RabbitMQ");
             endpointConfiguration.UseSerialization<NewtonsoftSerializer>();
+            endpointConfiguration.EnableCallbacks();
+            endpointConfiguration.MakeInstanceUniquelyAddressable(DateTime.UtcNow.Ticks.ToString());
             var transport = endpointConfiguration.UseTransport<RabbitMQTransport>();
             transport.UseConventionalRoutingTopology();
             transport.ConnectionString("host=localhost");

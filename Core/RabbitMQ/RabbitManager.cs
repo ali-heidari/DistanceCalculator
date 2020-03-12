@@ -3,12 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Core.NServiceBus;
 using Microsoft.Extensions.ObjectPool;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace WebAPI.RabbitMQ
 {
@@ -56,8 +59,29 @@ namespace WebAPI.RabbitMQ
                 properties.MessageId = Guid.NewGuid().ToString();
                 var typeName = typeof(T).FullName;
                 properties.Headers = new Dictionary<string, object> { { "NServiceBus.EnclosedMessageTypes", typeName } };
+                var correlationId = Guid.NewGuid().ToString();
+                properties.CorrelationId = correlationId;
+                string replyQueueName = channel.QueueDeclare().QueueName;
+                properties.ReplyTo = "RabbitMQ";//replyQueueName;
+
+                EventingBasicConsumer consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (model, ea) =>
+                {
+                    var body = ea.Body;
+                    var response = Encoding.UTF8.GetString(body);
+                    if (ea.BasicProperties.CorrelationId == correlationId)
+                    {
+
+                    }
+                };
+
+                channel.BasicConsume(
+                    consumer: consumer,
+                    queue: replyQueueName,
+                    autoAck: false);
 
                 channel.BasicPublish(exchangeName, routeKey, properties, sendBytes);
+
             }
             catch (Exception ex)
             {

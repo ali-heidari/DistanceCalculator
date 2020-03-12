@@ -32,6 +32,7 @@ public class Handler :
             UserGUID = message.UserGUID
         });
         
-        return Task.CompletedTask;
+        // return Task.CompletedTask;
+        return context.Reply(10);
     }
 }
