@@ -67,7 +67,28 @@
 
     <!-- Main JS-->
     <script src="~/js/main.js"></script>
-
+    <script type="text/javascript">
+        function submitForm(event, successRedirect) {
+            let form = document.forms[0];
+            const formData = new FormData(document.getElementById("authForm"));
+            let object = {};
+            for (const [key, value] of formData.entries()) {
+                object[key] = value;
+            }
+            var json = JSON.stringify(object);
+            var xhr = new XMLHttpRequest();
+            xhr.open(form.method, form.action, true);
+            xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+            xhr.onreadystatechange = function () {
+                if (xhr.status === 200) {
+                    window.location.href = successRedirect;
+                } else
+                    alert(xhr.statusText);
+            }
+            xhr.send(json);
+            return false;
+        }
+    </script>
 </body>
 
 </html>

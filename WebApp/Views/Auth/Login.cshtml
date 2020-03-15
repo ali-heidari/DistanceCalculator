@@ -11,7 +11,7 @@ Layout = "_AuthLayout";
             </a>
         </div>
         <div class="login-form">
-            <form action="" method="post">
+            <form action="http://localhost:4500/auth/login" method="post" id="authForm" onsubmit="return submitForm(event,'/')">
                 <div class="form-group">
                     <label>Email Address</label>
                     <input class="au-input au-input--full" type="email" name="email" placeholder="Email">
@@ -28,7 +28,7 @@ Layout = "_AuthLayout";
                         <a href="ForgotPass">Forgotten Password?</a>
                     </label>
                 </div>
-                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">sign in</button>
+                <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">Sign in</button>
             </form>
             <div class="register-link">
                 <p>
