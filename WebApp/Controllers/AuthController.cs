@@ -53,6 +53,25 @@ namespace WebApp.Controllers
             return View();
         }
         /// <summary>
+        /// Sends credentials to api for register
+        /// </summary>
+        /// <param name="email">email</param>
+        /// <param name="username">username</param>
+        /// <param name="password">password</param>
+        /// <returns>If OK redirects to login otherwise show current view.</returns>
+        [HttpPost]
+        public async Task<IActionResult> Register(string email,string username, string password)
+        {
+            RequestSender requestSender = new RequestSender();
+
+            var res = await requestSender.Post("auth/register", new { email,username, password });
+            if (res == HttpStatusCode.OK)
+            {
+                return RedirectToAction("login", "auth");  
+            }
+            return View();
+        }
+        /// <summary>
         /// Register action, shows the page to let user register new account
         /// </summary>
         /// <returns>
