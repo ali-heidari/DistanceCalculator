@@ -1,8 +1,11 @@
 
-class Authentication : IAuth
+namespace WebApp.Helpers.Auth
 {
-    public bool Validate(string email, string password)
+    class Authentication : IAuth
     {
-        return true;
+        public bool Validate(string email, string password)
+        {
+            return true;
+        }
     }
 }

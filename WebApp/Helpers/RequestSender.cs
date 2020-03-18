@@ -6,24 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-public class RequestSender
+namespace WebApp.Helpers
 {
-    private static HttpClient _client;
-
-    public RequestSender()
+    public class RequestSender
     {
-        if (_client == null)
+        private static HttpClient _client;
+
+        public RequestSender()
         {
-            _client = new HttpClient();
-            _client.BaseAddress = new Uri("http://localhost:4500/");
+            if (_client == null)
+            {
+                _client = new HttpClient();
+                _client.BaseAddress = new Uri("http://localhost:4500/");
+            }
         }
-    }
 
-    public async Task<HttpStatusCode> Post(string path, object content)
-    {
-        StringContent postContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
-        var response = await _client.PostAsync(path, postContent);
-        // var responseContent = await response.Content.ReadAsStringAsync();
-        return response.StatusCode;
+        public async Task<HttpStatusCode> Post(string path, object content)
+        {
+            StringContent postContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
+            var response = await _client.PostAsync(path, postContent);
+            // var responseContent = await response.Content.ReadAsStringAsync();
+            return response.StatusCode;
+        }
     }
 }

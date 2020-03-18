@@ -1,4 +1,8 @@
-public interface IAuth
+
+namespace WebApp.Helpers.Auth
 {
-    bool Validate(string email,string password);
+    public interface IAuth
+    {
+        bool Validate(string email, string password);
+    }
 }
