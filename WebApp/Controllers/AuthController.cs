@@ -4,8 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -47,7 +50,16 @@ namespace WebApp.Controllers
             var res = await requestSender.Post("auth/login", new { email, password });
             if (res == HttpStatusCode.OK)
             {
-                return RedirectToAction("Index", "Home");  
+                //Create the identity for the user  
+                ClaimsIdentity identity = new ClaimsIdentity(new[] {
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim(ClaimTypes.Role, "User")
+                }, CookieAuthenticationDefaults.AuthenticationScheme);
+                var principal = new ClaimsPrincipal(identity);
+
+                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                return RedirectToAction("Index", "Home");
             }
 
             return View();
@@ -60,14 +72,14 @@ namespace WebApp.Controllers
         /// <param name="password">password</param>
         /// <returns>If OK redirects to login otherwise show current view.</returns>
         [HttpPost]
-        public async Task<IActionResult> Register(string email,string username, string password)
+        public async Task<IActionResult> Register(string email, string username, string password)
         {
             RequestSender requestSender = new RequestSender();
 
-            var res = await requestSender.Post("auth/register", new { email,username, password });
+            var res = await requestSender.Post("auth/register", new { email, username, password });
             if (res == HttpStatusCode.OK)
             {
-                return RedirectToAction("login", "auth");  
+                return RedirectToAction("login", "auth");
             }
             return View();
         }

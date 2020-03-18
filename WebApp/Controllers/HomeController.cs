@@ -12,11 +12,11 @@ namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IAuth _auth;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IAuth auth)
         {
-            _logger = logger;
+            _auth = auth;
         }
 
         /// <summary>
@@ -25,10 +25,13 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns CalculateDistance.cshtml as view
         /// </returns>
-        [Authorize]
         public IActionResult Index()
         {
-            return View("CalculateDistance");
+            if (!_auth.Validate("", ""))
+            {
+                return View("CalculateDistance");
+            }
+            return RedirectToAction("Login", "Auth");
         }
 
         /// <summary>
@@ -37,7 +40,6 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns CalculateDistance.cshtml as view
         /// </returns>
-        [Authorize]
         public IActionResult CalculateDistance()
         {
             return View();
@@ -49,7 +51,6 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns DistancesHistory.cshtml as view
         /// </returns>
-        [Authorize]
         public IActionResult DistancesHistory()
         {
             return View();

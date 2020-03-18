@@ -27,13 +27,7 @@ namespace WebApp
         {
             services.AddControllersWithViews();
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-         options =>
-         {
-             options.LoginPath = new PathString("/auth/login");
-             options.AccessDeniedPath = new PathString("/auth/denied");
-         });
+            services.AddSingleton<IAuth,Authentication>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +48,6 @@ namespace WebApp
 
             app.UseRouting();
 
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
