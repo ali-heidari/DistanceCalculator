@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
             if (user == null)
                 return this.NotFound(new { message = "Username or password is incorrect" });
 
-            return Ok(user);
+            return Ok(user.Token);
         }
 
         /// <summary>
