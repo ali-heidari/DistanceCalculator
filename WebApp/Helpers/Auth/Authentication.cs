@@ -18,5 +18,16 @@ namespace WebApp.Helpers.Auth
                 return true;
             return false;
         }
+        public async Task<bool> Logout(string jwt)
+        {
+            RequestSender requestSender = new RequestSender();
+            JWTModel token = new JWTModel();
+            token.token = jwt;
+
+            var res = await requestSender.Post("auth/logout", token);
+            if (res.StatusCode == HttpStatusCode.OK)
+                return true;
+            return false;
+        }
     }
 }

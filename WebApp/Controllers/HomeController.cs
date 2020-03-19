@@ -31,9 +31,7 @@ namespace WebApp.Controllers
         /// </returns>
         public async Task<IActionResult> Index()
         {
-            String s = HttpContext.Session.GetString(Constants.TOKEN);
-            
-            if (await _auth.ValidateAsync(s))
+            if (await _auth.ValidateAsync(HttpContext.Session.GetString(Constants.TOKEN)))
             {
                 return View("CalculateDistance");
             }

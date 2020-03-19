@@ -14,17 +14,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using WebApp.Helpers;
+using WebApp.Helpers.Auth;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
     public class AuthController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IAuth _auth;
 
-        public AuthController(ILogger<HomeController> logger)
+        public AuthController(IAuth auth)
         {
-            _logger = logger;
+            _auth = auth;
         }
 
         /// <summary>
@@ -93,9 +94,12 @@ namespace WebApp.Controllers
         /// Logout user
         /// </summary>
         /// <returns>Returns login view</returns>
-        public IActionResult Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
-            return RedirectToAction("login", "auth");
+            if (await _auth.Logout(HttpContext.Session.GetString(Constants.TOKEN)))
+                return RedirectToAction("login", "auth");
+            else
+                return RedirectToAction("index", "home");
         }
 
         /// <summary>
