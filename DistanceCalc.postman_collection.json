@@ -7,6 +7,41 @@
 	},
 	"item": [
 		{
+			"name": "localhost:4500/auth/register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@test.coom\",\n    \"username\":\"test\",\n    \"password\": \"test\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4500/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "localhost:4500/auth/login",
 			"request": {
 				"method": "POST",
@@ -43,20 +78,13 @@
 			"response": []
 		},
 		{
-			"name": "localhost:4500/auth/register",
+			"name": "localhost:4500/auth/validate",
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"test@test.coom\",\n    \"username\":\"test\",\n    \"password\": \"test\"\n}",
+					"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjdiZmI5MzNmLTQ1NGEtNGI4MC1hYTI5LTk2NTQ2MWFkM2MzZCIsIm5iZiI6MTU4NDYzODA5NiwiZXhwIjoxNTg1MjQyODk2LCJpYXQiOjE1ODQ2MzgwOTZ9.Nkg8jYVjKGJbDGc7xJAF6WFSKrMrF_m9jiexktk-zow\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -64,14 +92,42 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:4500/auth/register",
+					"raw": "localhost:4500/auth/validate",
 					"host": [
 						"localhost"
 					],
 					"port": "4500",
 					"path": [
 						"auth",
-						"register"
+						"validate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4500/auth/logout",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ijg3ZGRlOTJkLTM3YWYtNGNkZS04ZGNjLTU0Mzk2MmRkZGU3YSIsIm5iZiI6MTU4NDYzOTc5OSwiZXhwIjoxNTg1MjQ0NTk5LCJpYXQiOjE1ODQ2Mzk3OTl9.fovPF47AUupFDhMh8m0aIwHj7wEt-HDGBUXgNb4nn_Y\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4500/auth/logout",
+					"host": [
+						"localhost"
+					],
+					"port": "4500",
+					"path": [
+						"auth",
+						"logout"
 					]
 				}
 			},
