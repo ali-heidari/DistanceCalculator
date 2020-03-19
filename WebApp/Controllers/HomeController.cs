@@ -13,7 +13,7 @@ using WebApp.Models;
 
 namespace WebApp.Controllers
 {
-    
+
     public class HomeController : Controller
     {
         private readonly IAuth _auth;
@@ -29,13 +29,9 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns CalculateDistance.cshtml as view
         /// </returns>
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            if (await _auth.ValidateAsync(HttpContext.Session.GetString(Constants.TOKEN)))
-            {
-                return View("CalculateDistance");
-            }
-            return RedirectToAction("Login", "Auth");
+            return View("CalculateDistance");
         }
 
         /// <summary>
@@ -44,9 +40,13 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns CalculateDistance.cshtml as view
         /// </returns>
-        public IActionResult CalculateDistance()
+        public async Task<IActionResult> CalculateDistanceAsync()
         {
-            return View();
+            if (await _auth.ValidateAsync(HttpContext.Session.GetString(Constants.TOKEN)))
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Auth");
         }
 
         /// <summary>
@@ -55,9 +55,13 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns DistancesHistory.cshtml as view
         /// </returns>
-        public IActionResult DistancesHistory()
+        public async Task<IActionResult> DistancesHistoryAsync()
         {
-            return View();
+            if (await _auth.ValidateAsync(HttpContext.Session.GetString(Constants.TOKEN)))
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Auth");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
