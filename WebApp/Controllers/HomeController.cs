@@ -29,11 +29,11 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns CalculateDistance.cshtml as view
         /// </returns>
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             String s = HttpContext.Session.GetString(Constants.TOKEN);
             
-            if (!_auth.Validate(s))
+            if (await _auth.ValidateAsync(s))
             {
                 return View("CalculateDistance");
             }

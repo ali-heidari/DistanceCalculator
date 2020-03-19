@@ -1,4 +1,4 @@
-namespace WebAPI.Models
+namespace Core.Models
 {
     public class JWTModel
     {

@@ -1,8 +1,10 @@
 
+using System.Threading.Tasks;
+
 namespace WebApp.Helpers.Auth
 {
     public interface IAuth
     {
-        bool Validate(string jwt);
+        Task<bool> ValidateAsync(string jwt);
     }
 }
