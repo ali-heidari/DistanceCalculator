@@ -26,3 +26,5 @@ A simple web application written in .Net Core
 5. Swagger:
     - http://localhost:4500/swagger/index.html
 6. Collection of postman
+7. JSON Web Token used for validation/authentication
+8. Sessions
