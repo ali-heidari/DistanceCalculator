@@ -16,6 +16,7 @@ namespace WebAPI.Services
         User Authenticate(string username, string password);
         bool Register(string email, string username, string password);
         bool Validate(string jwt);
+        bool Logout(string jwt);
     }
 
     public class AuthService : IAuthService
@@ -28,10 +29,25 @@ namespace WebAPI.Services
             _appSettings = appSettings.Value;
         }
 
+        /// <summary>
+        /// Validate token
+        /// </summary>
+        /// <param name="jwt">Token to be validated</param>
+        /// <returns>Returns true if valid otherwise false</returns>
         public bool Validate(string jwt)
         {
             Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
             return db.ValidateJWT(jwt);
+        }
+        /// <summary>
+        /// Remove token
+        /// </summary>
+        /// <param name="jwt">Token to be removed</param>
+        /// <returns>Returns true if valid otherwise false</returns>
+        public bool Logout(string jwt)
+        {
+            Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
+            return db.RemoveUser(jwt);
         }
 
         public User Authenticate(string email, string password)
@@ -83,6 +99,8 @@ namespace WebAPI.Services
             Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
             return db.Insert(user);
         }
+
+
 
     }
 }

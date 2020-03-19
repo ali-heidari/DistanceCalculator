@@ -90,6 +90,15 @@ namespace WebApp.Controllers
         }
 
         /// <summary>
+        /// Logout user
+        /// </summary>
+        /// <returns>Returns login view</returns>
+        public IActionResult Logout()
+        {
+            return RedirectToAction("login", "auth");
+        }
+
+        /// <summary>
         /// ForgotPass action, shows the page to let user to recover his/her password
         /// </summary>
         /// <returns>

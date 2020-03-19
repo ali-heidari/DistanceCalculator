@@ -79,6 +79,30 @@ namespace Core.Data
             }
         }
         /// <summary>
+        /// Remove row
+        /// </summary>
+        /// <param name="guid">guid of row</param>
+        /// <returns>Returns true if successful otherwise false</returns>
+        public bool Remove(string document, Guid guid)
+        {
+            try
+            {
+                Dictionary<Guid, string> rows = null;
+                if (!_data.ContainsKey(document))
+                    return false;
+
+                rows = _data[document];
+
+                rows.Remove(guid);
+
+                return true;
+            }
+            catch (Exception er)
+            {
+                return false;
+            }
+        }
+        /// <summary>
         /// Get user
         /// </summary>
         /// <param name="email">email of user</param>
@@ -131,6 +155,39 @@ namespace Core.Data
                     user.guid = item.Key;
                     if (user.JWT == jwt)
                         return true;
+                }
+                return false;
+            }
+            catch (Exception er)
+            {
+                return false;
+            }
+        }
+        /// <summary>
+        /// Remove user
+        /// </summary>
+        /// <param name="jwt">JSON Web Token belongs to the user</param>
+        /// <returns>Returns true if valid otherwise false</returns>
+        public bool RemoveUser(string jwt)
+        {
+            try
+            {
+                Dictionary<Guid, string> rows = null;
+                if (!_data.ContainsKey("User"))
+                    return false;
+
+                rows = _data["User"];
+
+                User user = null;
+                foreach (var item in rows)
+                {
+                    user = JsonConvert.DeserializeObject<User>(item.Value);
+                    user.guid = item.Key;
+                    if (user.JWT == jwt)
+                    {
+                        rows.Remove(user.guid);
+                        return true;
+                    }
                 }
                 return false;
             }

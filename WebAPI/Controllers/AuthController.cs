@@ -71,5 +71,21 @@ namespace WebAPI.Controllers
 
             return Ok(res);
         }
+        /// <summary>
+        /// Logout the user
+        /// </summary>
+        /// <param name="jwt">Token belongs to user</param>
+        /// <returns>Return 200 if successfull otherwise bad request</returns>
+        [AllowAnonymous]
+        [HttpPost("Logout")]
+        public IActionResult Logout([FromBody]JWTModel jwt)
+        {
+            bool res = _authService.Logout(jwt.token);
+
+            if (!res)
+                return this.BadRequest(new { message = "Failed to logout" });
+
+            return Ok(res);
+        }
     }
 }
