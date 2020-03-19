@@ -21,6 +21,23 @@ namespace WebAPI.Controllers
         }
 
         /// <summary>
+        /// Validate token
+        /// </summary>
+        /// <param name="jwt">Incoming token to validate</param>
+        /// <returns>Returns 200 if token valid, otherwise 404</returns>
+        [AllowAnonymous]
+        [HttpPost("validate")]
+        public IActionResult Validate([FromBody]JWTModel jwt)
+        {
+            bool res = _authService.Validate(jwt.token);
+
+            if (!res)
+                return this.NotFound(new { message = "Token is not valid" });
+
+            return Ok(true);
+        }
+
+        /// <summary>
         /// Login interface
         /// </summary>
         /// <param name="model"></param>

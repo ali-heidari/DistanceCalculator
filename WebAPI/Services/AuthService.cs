@@ -15,6 +15,7 @@ namespace WebAPI.Services
     {
         User Authenticate(string username, string password);
         bool Register(string email, string username, string password);
+        bool Validate(string jwt);
     }
 
     public class AuthService : IAuthService
@@ -25,6 +26,12 @@ namespace WebAPI.Services
         public AuthService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
+        }
+
+        public bool Validate(string jwt)
+        {
+            Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
+            return db.ValidateJWT(jwt);
         }
 
         public User Authenticate(string email, string password)
@@ -55,8 +62,8 @@ namespace WebAPI.Services
             eUser.Username = user.username;
             eUser.Password = user.password;
             eUser.GUID = user.guid.ToString();
-            eUser.Token = tokenHandler.WriteToken(token);
-
+            eUser.Token = user.JWT = tokenHandler.WriteToken(token);
+            db.Update(user);
             return eUser.WithoutPassword();
         }
 

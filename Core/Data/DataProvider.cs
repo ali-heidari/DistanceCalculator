@@ -55,6 +55,30 @@ namespace Core.Data
         }
 
         /// <summary>
+        /// Update document
+        /// </summary>
+        /// <param name="obj">Dataobject to be inserted</param>
+        /// <returns>Returns true if successful otherwise false</returns>
+        public bool Update(DataObject obj)
+        {
+            try
+            {
+                Dictionary<Guid, string> rows = null;
+                if (!_data.ContainsKey(obj.DocumentName))
+                    return false;
+
+                rows = _data[obj.DocumentName];
+
+                rows[obj.guid] = JsonConvert.SerializeObject(obj);
+
+                return true;
+            }
+            catch (Exception er)
+            {
+                return false;
+            }
+        }
+        /// <summary>
         /// Get user
         /// </summary>
         /// <param name="email">email of user</param>
@@ -83,6 +107,36 @@ namespace Core.Data
             catch (Exception er)
             {
                 return null;
+            }
+        }
+        /// <summary>
+        /// Validate JSON Web Token
+        /// </summary>
+        /// <param name="jwt">JSON Web Token</param>
+        /// <returns>Returns true if valid otherwise false</returns>
+        public bool ValidateJWT(string jwt)
+        {
+            try
+            {
+                Dictionary<Guid, string> rows = null;
+                if (!_data.ContainsKey("User"))
+                    return false;
+
+                rows = _data["User"];
+
+                User user = null;
+                foreach (var item in rows)
+                {
+                    user = JsonConvert.DeserializeObject<User>(item.Value);
+                    user.guid = item.Key;
+                    if (user.JWT == jwt)
+                        return true;
+                }
+                return false;
+            }
+            catch (Exception er)
+            {
+                return false;
             }
         }
         /// <summary>
