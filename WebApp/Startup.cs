@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebApp.Helpers.Auth;
 
 namespace WebApp
 {
@@ -27,7 +28,11 @@ namespace WebApp
         {
             services.AddControllersWithViews();
 
-            services.AddSingleton<IAuth,Authentication>();
+            services.AddSingleton<IAuth, Authentication>();
+            services.AddMvc()
+                    .AddSessionStateTempDataProvider();
+            services.AddSession();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +52,10 @@ namespace WebApp
             app.UseStaticFiles();
 
             app.UseRouting();
+            //Add User session
+            app.UseSession();
+
+            app.UseAuthorization();
 
 
             app.UseEndpoints(endpoints =>

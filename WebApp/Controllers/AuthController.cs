@@ -9,9 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using WebApp.Helpers;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -48,16 +50,9 @@ namespace WebApp.Controllers
             RequestSender requestSender = new RequestSender();
 
             var res = await requestSender.Post("auth/login", new { email, password });
-            if (res == HttpStatusCode.OK)
+            if (res.StatusCode == HttpStatusCode.OK)
             {
-                //Create the identity for the user  
-                ClaimsIdentity identity = new ClaimsIdentity(new[] {
-                    new Claim(ClaimTypes.Email, email),
-                    new Claim(ClaimTypes.Role, "User")
-                }, CookieAuthenticationDefaults.AuthenticationScheme);
-                var principal = new ClaimsPrincipal(identity);
-
-                var login = HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+                HttpContext.Session.SetString(Constants.TOKEN, await res.Content.ReadAsStringAsync());
 
                 return RedirectToAction("Index", "Home");
             }
@@ -77,7 +72,7 @@ namespace WebApp.Controllers
             RequestSender requestSender = new RequestSender();
 
             var res = await requestSender.Post("auth/register", new { email, username, password });
-            if (res == HttpStatusCode.OK)
+            if (res.StatusCode == HttpStatusCode.OK)
             {
                 return RedirectToAction("login", "auth");
             }

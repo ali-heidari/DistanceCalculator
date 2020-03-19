@@ -5,11 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using WebApp.Helpers;
+using WebApp.Helpers.Auth;
 using WebApp.Models;
 
 namespace WebApp.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly IAuth _auth;
@@ -27,7 +31,9 @@ namespace WebApp.Controllers
         /// </returns>
         public IActionResult Index()
         {
-            if (!_auth.Validate("", ""))
+            String s = HttpContext.Session.GetString(Constants.TOKEN);
+            
+            if (!_auth.Validate(s))
             {
                 return View("CalculateDistance");
             }

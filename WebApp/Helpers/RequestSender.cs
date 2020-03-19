@@ -21,12 +21,11 @@ namespace WebApp.Helpers
             }
         }
 
-        public async Task<HttpStatusCode> Post(string path, object content)
+        public async Task<HttpResponseMessage> Post(string path, object content)
         {
             StringContent postContent = new StringContent(JsonConvert.SerializeObject(content), Encoding.UTF8, "application/json");
             var response = await _client.PostAsync(path, postContent);
-            // var responseContent = await response.Content.ReadAsStringAsync();
-            return response.StatusCode;
+            return response;
         }
     }
 }
