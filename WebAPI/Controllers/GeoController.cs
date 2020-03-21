@@ -23,7 +23,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="model">Geopoints object</param>
         /// <returns>Returns ok if data send to geoService</returns>
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("getDistance")]
         public IActionResult GetDistance(GeoPoints model)
         {
@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
         /// </summary>
         /// <param name="user">user, always has only guid </param>
         /// <returns>Returns list or not found.</returns>
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("GetAllDistances")]
         public IActionResult GetAllDistances(Entities.User user)
         {
