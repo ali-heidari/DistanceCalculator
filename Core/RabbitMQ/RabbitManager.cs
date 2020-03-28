@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using Core.Models;
 using Core.NServiceBus;
 using Microsoft.Extensions.ObjectPool;
 using Newtonsoft.Json;
@@ -69,8 +70,20 @@ namespace WebAPI.RabbitMQ
                 {
                     var body = ea.Body;
                     var response = Encoding.UTF8.GetString(body);
-                    if (ea.BasicProperties.CorrelationId == correlationId)
+                    var msg = JsonConvert.DeserializeObject<GeoPoints>(response.Substring(1));
+                    if (msg != null)
                     {
+                        Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
+                        // Insert into database
+                        bool res = db.Insert(new Core.Data.GeoData()
+                        {
+                            Distance = msg.Distance,
+                            StartingLat = msg.StartingLat,
+                            StartingLng = msg.StartingLng,
+                            EndingLat = msg.EndingLat,
+                            EndingLng = msg.EndingLng,
+                            UserGUID = msg.UserGUID
+                        });
 
                     }
                     ((EventingBasicConsumer)model).Model.BasicAck(ea.DeliveryTag, false);

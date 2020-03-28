@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using Core.NServiceBus;
 using NServiceBus;
 using NServiceBus.Logging;
-using RabbitMQ.Client.Events;
+using Core.Models;
+
 /// <summary>
 /// Handles request come for calculation of distance
 /// </summary>
@@ -17,22 +18,9 @@ public class Handler :
         var sCoord = new GeoCoordinate(message.StartingLat, message.StartingLng);
         var eCoord = new GeoCoordinate(message.EndingLat, message.EndingLng);
         // Calc distance
-        var distance = sCoord.GetDistanceTo(eCoord);
-
-        log.Info($"Distance = {distance}");
-        Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
-        // Insert into database
-        bool res = db.Insert(new Core.Data.GeoData()
-        {
-            Distance = distance,
-            StartingLat = message.StartingLat,
-            StartingLng = message.StartingLng,
-            EndingLat = message.EndingLat,
-            EndingLng = message.EndingLng,
-            UserGUID = message.UserGUID
-        });
+        message.Distance = sCoord.GetDistanceTo(eCoord);        
         
-        // return Task.CompletedTask;
-        return context.Reply(10);
+        return context.Reply(message);
     }
+
 }

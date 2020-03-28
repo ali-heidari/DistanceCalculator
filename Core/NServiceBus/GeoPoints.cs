@@ -8,6 +8,7 @@ namespace Core.NServiceBus
         IMessage
     {
         public string UserGUID { get; set; }
+        public double Distance { get; set; }
         public float StartingLat { get; set; }
         public float StartingLng { get; set; }
         public float EndingLat { get; set; }
