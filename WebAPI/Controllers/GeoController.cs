@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         /// <param name="model">Geopoints object</param>
         /// <returns>Returns ok if data send to geoService</returns>
         [Authorize]
-        [HttpGet("getDistance")]
+        [HttpPost("getDistance")]
         public IActionResult GetDistance(GeoPoints model)
         {
             // publish message  

@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using WebApp.Helpers;
 using WebApp.Helpers.Auth;
 using WebApp.Models;
+using Core.Models;
+using System.Net;
 
 namespace WebApp.Controllers
 {
@@ -29,9 +31,9 @@ namespace WebApp.Controllers
         /// <returns>
         /// Returns CalculateDistance.cshtml as view
         /// </returns>
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View("CalculateDistance");
+            return await CalculateDistanceAsync();
         }
 
         /// <summary>
@@ -44,7 +46,23 @@ namespace WebApp.Controllers
         {
             if (await _auth.ValidateAsync(HttpContext.Session.GetString(Constants.TOKEN)))
             {
-                return View();
+                if (Request.Method.ToUpper() == "POST")
+                {
+                    RequestSender requestSender = new RequestSender(HttpContext.Session.GetString(Constants.TOKEN));
+                    var response = await requestSender.Post("/geo/GetDistance", new GetDistanceModel()
+                    {
+                        startingLat = float.Parse(Request.Form["start_lat"][0].ToString()),
+                        startingLng = float.Parse(Request.Form["start_lng"][0].ToString()),
+                        endingLat = float.Parse(Request.Form["end_lat"][0].ToString()),
+                        endingLng = float.Parse(Request.Form["end_lng"][0].ToString())
+                    });
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        return Ok(await response.Content.ReadAsStringAsync());
+                    }
+                    return Error();
+                }
+                return View("CalculateDistance");
             }
             return RedirectToAction("Login", "Auth");
         }
@@ -67,7 +85,7 @@ namespace WebApp.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
 

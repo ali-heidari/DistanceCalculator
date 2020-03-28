@@ -9,6 +9,7 @@ namespace WebApp.Helpers.Auth
     {
         public async Task<bool> ValidateAsync(string jwt)
         {
+            if (string.IsNullOrEmpty(jwt)) return false;
             RequestSender requestSender = new RequestSender();
             JWTModel token = new JWTModel();
             token.token = jwt;
@@ -20,6 +21,7 @@ namespace WebApp.Helpers.Auth
         }
         public async Task<bool> Logout(string jwt)
         {
+            if (string.IsNullOrEmpty(jwt)) return false;
             RequestSender requestSender = new RequestSender();
             JWTModel token = new JWTModel();
             token.token = jwt;
