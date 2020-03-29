@@ -44,7 +44,11 @@ namespace WebAPI.Controllers
             try
             {
                 Core.Data.DataProvider db = Core.Data.DataProvider.DataProviderFactory();
-                return Ok(db._data["GeoData"].Where(x => x.Value.Contains( user.GUID)));
+                if (user.GUID == null)
+                {
+                    return Ok(db._data["GeoData"]);
+                }
+                return Ok(db._data["GeoData"].Where(x => x.Value.Contains(user.GUID)));
             }
             catch (System.Exception)
             {
